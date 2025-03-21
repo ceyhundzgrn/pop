@@ -1,0 +1,54 @@
+Cimport java.util.*;
+
+public class ArrayTasks {
+    
+    // Task 1: Filter elements at even indices that are also odd numbers
+    public static int[] filterEvenIndexOddValue(int[] array) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < array.length; i += 2) {
+            if (array[i] % 2 != 0) {
+                result.add(array[i]);
+            }
+        }
+        return result.stream().mapToInt(i -> i).toArray();
+    }
+
+    // Task 2: Find the dominant element
+    public static int findDominant(int[] array) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        int threshold = array.length / 2;
+        for (int num : array) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+            if (countMap.get(num) > threshold) {
+                return num;
+            }
+        }
+        return -1;
+    }
+
+    // Task 3: Rotate array to the right by given positions
+    public static int[] rotateArray(int[] array, int positions) {
+        int n = array.length;
+        if (n == 0 || positions % n == 0) return array;
+        positions = positions % n; // In case positions > n
+        int[] rotated = new int[n];
+        for (int i = 0; i < n; i++) {
+            rotated[(i + positions) % n] = array[i];
+        }
+        return rotated;
+    }
+
+    public static void main(String[] args) {
+        // Testing the functions
+        System.out.println(Arrays.toString(filterEvenIndexOddValue(new int[]{1, 2, 3, 4, 5, 6})));
+        System.out.println(Arrays.toString(filterEvenIndexOddValue(new int[]{2, 3, 4, 5, 6, 7})));
+        System.out.println(Arrays.toString(filterEvenIndexOddValue(new int[]{7, 8, 9, 10, 11})));
+        
+        System.out.println(findDominant(new int[]{3, 3, 3, 2, 2}));
+        System.out.println(findDominant(new int[]{1, 2, 3, 4}));
+        System.out.println(findDominant(new int[]{5, 5, 5, 5, 1}));
+        
+        System.out.println(Arrays.toString(rotateArray(new int[]{1, 2, 3, 4, 5}, 2)));
+        System.out.println(Arrays.toString(rotateArray(new int[]{1, 2, 3}, 3)));
+    }
+}
